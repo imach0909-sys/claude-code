@@ -1,0 +1,52 @@
+name: Esutech Daily News
+
+on:
+  schedule:
+    # 22:00 UTC = 7:00 AM JST every day
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI for testing
+
+permissions:
+  contents: write  # needed to commit posted_news.json back to repo
+
+jobs:
+  post-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --quiet \
+            feedparser==6.0.11 \
+            anthropic>=0.40.0 \
+            requests>=2.31.0 \
+            python-dateutil>=2.9.0
+
+      - name: Run news bot
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: python scripts/news_bot.py
+
+      - name: Commit updated news cache
+        run: |
+          git config user.name "Esutech News Bot"
+          git config user.email "bot@esutech-group.com"
+          git add data/posted_news.json
+          # Only commit if there are actual changes
+          git diff --cached --quiet || \
+            git commit -m "chore: update news cache $(TZ=Asia/Tokyo date '+%Y-%m-%d')"
+          git push -u origin ${{ github.ref_name }}
