@@ -62,7 +62,7 @@ if exist "build" rmdir /s /q "build"
 if exist "dist" rmdir /s /q "dist"
 
 echo --- (1/2) 動画2分割ツール ---
-pyinstaller --noconfirm --onefile --windowed --name VideoSplitter ^
+python -m PyInstaller --noconfirm --onefile --windowed --name VideoSplitter ^
   --add-binary "bin\ffmpeg.exe;bin" ^
   --add-binary "bin\ffprobe.exe;bin" ^
   app.py
@@ -73,7 +73,7 @@ if errorlevel 1 (
 )
 
 echo --- (2/2) 音声取り出しツール ---
-pyinstaller --noconfirm --onefile --windowed --name AudioExtractor ^
+python -m PyInstaller --noconfirm --onefile --windowed --name AudioExtractor ^
   --add-binary "bin\ffmpeg.exe;bin" ^
   --add-binary "bin\ffprobe.exe;bin" ^
   audio_app.py
