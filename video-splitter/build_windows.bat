@@ -9,19 +9,24 @@ cd /d "%~dp0"
 
 echo === 動画2分割ツール ビルド開始 ===
 
-REM --- Python の確認 ---
-where python >nul 2>nul
-if errorlevel 1 (
+REM --- Python の確認（py ランチャーを優先、無ければ python）---
+set "PYCMD="
+py --version >nul 2>nul && set "PYCMD=py"
+if not defined PYCMD (
+    python --version >nul 2>nul && set "PYCMD=python"
+)
+if not defined PYCMD (
     echo [エラー] Python が見つかりません。https://www.python.org/ からインストールし、
     echo         インストール時に "Add Python to PATH" にチェックを入れてください。
     pause
     exit /b 1
 )
+echo 使用する Python: %PYCMD%
 
 REM --- PyInstaller のインストール ---
 echo --- PyInstaller を準備中 ---
-python -m pip install --upgrade pip >nul
-python -m pip install pyinstaller || (
+%PYCMD% -m pip install --upgrade pip >nul
+%PYCMD% -m pip install pyinstaller || (
     echo [エラー] PyInstaller のインストールに失敗しました。
     pause
     exit /b 1
@@ -62,7 +67,7 @@ if exist "build" rmdir /s /q "build"
 if exist "dist" rmdir /s /q "dist"
 
 echo --- (1/2) 動画2分割ツール ---
-python -m PyInstaller --noconfirm --onefile --windowed --name VideoSplitter ^
+%PYCMD% -m PyInstaller --noconfirm --onefile --windowed --name VideoSplitter ^
   --add-binary "bin\ffmpeg.exe;bin" ^
   --add-binary "bin\ffprobe.exe;bin" ^
   app.py
@@ -73,7 +78,7 @@ if errorlevel 1 (
 )
 
 echo --- (2/2) 音声取り出しツール ---
-python -m PyInstaller --noconfirm --onefile --windowed --name AudioExtractor ^
+%PYCMD% -m PyInstaller --noconfirm --onefile --windowed --name AudioExtractor ^
   --add-binary "bin\ffmpeg.exe;bin" ^
   --add-binary "bin\ffprobe.exe;bin" ^
   audio_app.py
