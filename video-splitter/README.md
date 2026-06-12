@@ -1,9 +1,12 @@
-# 動画2分割ツール
+# 動画ツール集
 
-動画ファイルを **時間のちょうど真ん中** で2つに分割するデスクトップアプリです。
-Python の標準GUI（tkinter）で作られており、`ffmpeg` を使って分割します。
+Python の標準GUI（tkinter）と `ffmpeg` で作った、2つの動画ツールです。
 
-例: `movie.mp4` を選ぶと `movie_part1.mp4` と `movie_part2.mp4` が作られます。
+1. **動画2分割ツール**（`app.py`）: 動画を時間のちょうど真ん中で2つに分割。
+   例: `movie.mp4` → `movie_part1.mp4` と `movie_part2.mp4`
+2. **音声取り出しツール**（`audio_app.py`）: 動画から音声だけを取り出す。
+   形式は MP3 / M4A(AAC) / WAV から選択可能。
+   例: `movie.mp4` → `movie.mp3`
 
 ## 必要なもの
 
@@ -26,15 +29,25 @@ Python の標準GUI（tkinter）で作られており、`ffmpeg` を使って分
 
 ```bash
 cd video-splitter
-python3 app.py
+python3 app.py        # 動画2分割ツール
+python3 audio_app.py  # 音声取り出しツール
 ```
 
+### 動画2分割ツール
 1. 「選択...」で動画ファイルを選ぶ
 2. 動画の長さと分割位置が表示される
 3. （必要なら）出力先フォルダを変更
 4. 「真ん中で2分割する」ボタンを押す
 
 完了すると、保存先のフォルダに `〜_part1` と `〜_part2` が作成されます。
+
+### 音声取り出しツール
+1. 「選択...」で動画ファイルを選ぶ
+2. 出力形式（MP3 / M4A / WAV）を選ぶ
+3. （必要なら）出力先フォルダを変更
+4. 「音声を取り出す」ボタンを押す
+
+完了すると、保存先のフォルダに音声ファイル（例 `movie.mp3`）が作成されます。
 
 ### 高速分割と正確分割
 
@@ -48,11 +61,15 @@ python3 app.py
 GUIを使わず、ターミナルから直接実行することもできます。
 
 ```bash
-# 入力ファイルと同じ場所に出力
+# 動画2分割: 入力ファイルと同じ場所に出力
 python3 splitter.py movie.mp4
-
 # 出力先を指定 / 正確な位置で分割
 python3 splitter.py movie.mp4 -o ./out --reencode
+
+# 音声取り出し: MP3で出力（既定）
+python3 extractor.py movie.mp4
+# 形式と出力先を指定（MP3 / "M4A (AAC)" / WAV）
+python3 extractor.py movie.mp4 -f WAV -o ./out
 ```
 
 ## 人に渡す（配布用 .exe を作る / Windows）
@@ -68,12 +85,15 @@ Python も ffmpeg も入っていない相手でも、**ダブルクリックだ
    - PyInstaller のインストール
    - ffmpeg / ffprobe のダウンロード（`bin\` に保存）
    - `.exe` のビルド
-3. 完成すると **`dist\VideoSplitter.exe`** ができます。
+3. 完成すると `dist\` フォルダに次の2つができます:
+   - **`VideoSplitter.exe`**（動画を真ん中で2分割）
+   - **`AudioExtractor.exe`**（動画から音声を取り出す）
 
 ### 渡し方
 
-- `dist\VideoSplitter.exe` を**そのまま相手に渡すだけ**です（メール添付・USB・
-  クラウド共有など）。相手は Python も ffmpeg も入れる必要はありません。
+- `dist\` の `.exe` を**そのまま相手に渡すだけ**です（メール添付・USB・
+  クラウド共有など）。渡したい方のexeだけでも、両方でもOK。相手は Python も
+  ffmpeg も入れる必要はありません。
 - 受け取った人は **ダブルクリックで起動** できます。
 
 ### 注意点
@@ -91,17 +111,19 @@ Python も ffmpeg も入っていない相手でも、**ダブルクリックだ
 ## テスト
 
 ```bash
-python3 -m unittest test_splitter.py -v
+python3 -m unittest discover -p "test_*.py" -v
 ```
 
-`ffmpeg` がある環境では、実際に短いテスト動画を生成して分割まで検証します。
+`ffmpeg` がある環境では、実際に短いテスト動画を生成して分割・抽出まで検証します。
 無い場合はパス生成などのロジックのみ検証します。
 
 ## ファイル構成
 
 | ファイル | 役割 |
 |----------|------|
-| `app.py` | tkinter GUI アプリ |
+| `app.py` | 動画2分割ツールのGUI |
+| `audio_app.py` | 音声取り出しツールのGUI |
 | `splitter.py` | 分割のコアロジック（CLIとしても利用可） |
-| `test_splitter.py` | テスト |
-| `build_windows.bat` | Windows用の配布 `.exe` を作るビルドスクリプト |
+| `extractor.py` | 音声取り出しのコアロジック（CLIとしても利用可） |
+| `test_splitter.py` / `test_extractor.py` | テスト |
+| `build_windows.bat` | Windows用の配布 `.exe`（2つ）を作るビルドスクリプト |

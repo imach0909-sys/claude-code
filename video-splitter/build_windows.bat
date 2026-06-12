@@ -61,21 +61,34 @@ REM 既存のビルド成果物を掃除
 if exist "build" rmdir /s /q "build"
 if exist "dist" rmdir /s /q "dist"
 
+echo --- (1/2) 動画2分割ツール ---
 pyinstaller --noconfirm --onefile --windowed --name VideoSplitter ^
   --add-binary "bin\ffmpeg.exe;bin" ^
   --add-binary "bin\ffprobe.exe;bin" ^
   app.py
 if errorlevel 1 (
-    echo [エラー] ビルドに失敗しました。
+    echo [エラー] VideoSplitter のビルドに失敗しました。
+    pause
+    exit /b 1
+)
+
+echo --- (2/2) 音声取り出しツール ---
+pyinstaller --noconfirm --onefile --windowed --name AudioExtractor ^
+  --add-binary "bin\ffmpeg.exe;bin" ^
+  --add-binary "bin\ffprobe.exe;bin" ^
+  audio_app.py
+if errorlevel 1 (
+    echo [エラー] AudioExtractor のビルドに失敗しました。
     pause
     exit /b 1
 )
 
 echo.
 echo ============================================================
-echo  ビルド完了！
-echo  dist\VideoSplitter.exe を相手に渡してください。
-echo  （Python も ffmpeg も不要で、ダブルクリックで動きます）
+echo  ビルド完了！ dist\ フォルダに次の2つができました:
+echo    - VideoSplitter.exe   (動画を真ん中で2分割)
+echo    - AudioExtractor.exe  (動画から音声を取り出す)
+echo  どちらも Python も ffmpeg も不要で、ダブルクリックで動きます。
 echo ============================================================
 echo.
 pause
