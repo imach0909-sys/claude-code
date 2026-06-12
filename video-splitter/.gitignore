@@ -1,0 +1,13 @@
+# PyInstaller / ビルド成果物
+build/
+dist/
+*.spec
+
+# 同梱用にダウンロードした ffmpeg バイナリ（サイズが大きいので含めない）
+bin/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

@@ -55,6 +55,39 @@ python3 splitter.py movie.mp4
 python3 splitter.py movie.mp4 -o ./out --reencode
 ```
 
+## 人に渡す（配布用 .exe を作る / Windows）
+
+Python も ffmpeg も入っていない相手でも、**ダブルクリックだけで動く単体の
+`.exe`** を作って渡せます。ffmpeg は自動でダウンロードして同梱します。
+
+### 作り方
+
+1. **あなたの Windows PC** で、このフォルダにある **`build_windows.bat`** を
+   ダブルクリック（または コマンドプロンプトで実行）します。
+2. 自動で次が行われます:
+   - PyInstaller のインストール
+   - ffmpeg / ffprobe のダウンロード（`bin\` に保存）
+   - `.exe` のビルド
+3. 完成すると **`dist\VideoSplitter.exe`** ができます。
+
+### 渡し方
+
+- `dist\VideoSplitter.exe` を**そのまま相手に渡すだけ**です（メール添付・USB・
+  クラウド共有など）。相手は Python も ffmpeg も入れる必要はありません。
+- 受け取った人は **ダブルクリックで起動** できます。
+
+### 注意点
+
+- ⚠️ `build_windows.bat` は **Windows 上で実行** してください。PyInstaller は
+  実行したOS向けの実行ファイルしか作れません（Windowsで作れば Windows用）。
+- 初回ビルドは ffmpeg のダウンロードのため数分かかります（2回目以降は速い）。
+- ウイルス対策ソフトや SmartScreen が「不明な発行元」と警告することがあります。
+  自作の未署名アプリのため出るもので、「詳細情報 → 実行」で起動できます。
+  気になる場合はコード署名証明書での署名を検討してください。
+- ファイルサイズは ffmpeg を含むため数十MB程度になります。
+
+> Mac 版が必要な場合は Mac 上で同様にビルドする必要があります（別途対応可能）。
+
 ## テスト
 
 ```bash
@@ -71,3 +104,4 @@ python3 -m unittest test_splitter.py -v
 | `app.py` | tkinter GUI アプリ |
 | `splitter.py` | 分割のコアロジック（CLIとしても利用可） |
 | `test_splitter.py` | テスト |
+| `build_windows.bat` | Windows用の配布 `.exe` を作るビルドスクリプト |

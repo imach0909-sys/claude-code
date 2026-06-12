@@ -10,6 +10,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 
 
@@ -17,10 +18,52 @@ class SplitterError(Exception):
     """分割処理に関するエラー。"""
 
 
+def _bundled_dirs() -> list[str]:
+    """同梱されたバイナリを探すディレクトリ候補を返す。
+
+    PyInstaller でビルドした場合、ffmpeg/ffprobe を実行ファイルと一緒に
+    同梱できる。その場合はシステムのPATHより同梱版を優先する。
+    """
+    dirs: list[str] = []
+    # PyInstaller 実行時の一時展開先（--add-binary で入れた場所）
+    meipass = getattr(sys, "_MEIPASS", None)
+    if meipass:
+        dirs.append(meipass)
+        dirs.append(os.path.join(meipass, "bin"))
+    # 実行ファイル / スクリプトと同じ場所の bin/
+    if getattr(sys, "frozen", False):
+        exe_dir = os.path.dirname(sys.executable)
+    else:
+        exe_dir = os.path.dirname(os.path.abspath(__file__))
+    dirs.append(exe_dir)
+    dirs.append(os.path.join(exe_dir, "bin"))
+    return dirs
+
+
+def resolve_tool(name: str) -> str | None:
+    """ffmpeg/ffprobe の実行パスを解決する（同梱版を優先）。"""
+    exe = name + (".exe" if os.name == "nt" else "")
+    for d in _bundled_dirs():
+        candidate = os.path.join(d, exe)
+        if os.path.isfile(candidate):
+            return candidate
+    # 同梱が無ければシステムのPATHから探す
+    return shutil.which(name)
+
+
+def _run(cmd: list[str]) -> subprocess.CompletedProcess:
+    """subprocess.run のラッパー。Windowsの windowed アプリで
+    コンソール窓が一瞬表示されるのを防ぐ。"""
+    kwargs: dict = {"capture_output": True, "text": True}
+    if os.name == "nt":
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW  # type: ignore[attr-defined]
+    return subprocess.run(cmd, **kwargs)
+
+
 def check_dependencies() -> None:
     """ffmpeg / ffprobe が利用可能か確認する。"""
     for tool in ("ffmpeg", "ffprobe"):
-        if shutil.which(tool) is None:
+        if resolve_tool(tool) is None:
             raise SplitterError(
                 f"'{tool}' が見つかりません。ffmpeg をインストールしてください。\n"
                 "  macOS:  brew install ffmpeg\n"
@@ -34,21 +77,19 @@ def get_duration(input_path: str) -> float:
     if not os.path.isfile(input_path):
         raise SplitterError(f"ファイルが見つかりません: {input_path}")
 
+    ffprobe = resolve_tool("ffprobe") or "ffprobe"
     cmd = [
-        "ffprobe",
+        ffprobe,
         "-v", "error",
         "-print_format", "json",
         "-show_format",
         input_path,
     ]
-    try:
-        result = subprocess.run(
-            cmd, capture_output=True, text=True, check=True
-        )
-    except subprocess.CalledProcessError as exc:
+    result = _run(cmd)
+    if result.returncode != 0:
         raise SplitterError(
-            f"動画情報の取得に失敗しました:\n{exc.stderr.strip()}"
-        ) from exc
+            f"動画情報の取得に失敗しました:\n{result.stderr.strip()}"
+        )
 
     try:
         data = json.loads(result.stdout)
@@ -101,6 +142,7 @@ def split_in_half(
     duration = get_duration(input_path)
     midpoint = duration / 2.0
     part1, part2 = _output_paths(input_path, output_dir)
+    ffmpeg = resolve_tool("ffmpeg") or "ffmpeg"
 
     if reencode:
         # 正確な位置で分割（再エンコードのため低速）
@@ -111,7 +153,7 @@ def split_in_half(
 
     # 前半: 0 〜 midpoint
     cmd1 = [
-        "ffmpeg", "-y",
+        ffmpeg, "-y",
         "-i", input_path,
         "-t", f"{midpoint:.3f}",
         *codec_args,
@@ -119,7 +161,7 @@ def split_in_half(
     ]
     # 後半: midpoint 〜 末尾
     cmd2 = [
-        "ffmpeg", "-y",
+        ffmpeg, "-y",
         "-ss", f"{midpoint:.3f}",
         "-i", input_path,
         *codec_args,
@@ -127,12 +169,11 @@ def split_in_half(
     ]
 
     for cmd in (cmd1, cmd2):
-        try:
-            subprocess.run(cmd, capture_output=True, text=True, check=True)
-        except subprocess.CalledProcessError as exc:
+        result = _run(cmd)
+        if result.returncode != 0:
             raise SplitterError(
-                f"分割に失敗しました:\n{exc.stderr.strip()[-800:]}"
-            ) from exc
+                f"分割に失敗しました:\n{result.stderr.strip()[-800:]}"
+            )
 
     return SplitResult(
         part1=part1, part2=part2, split_point=midpoint, duration=duration
