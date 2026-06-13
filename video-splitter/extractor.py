@@ -36,8 +36,8 @@ class ExtractError(SplitterError):
 @dataclass
 class ExtractResult:
     output: str        # 生成された音声ファイルのパス
-    duration: float    # 元動画の長さ（秒）
     fmt: str           # 使用した形式名
+    duration: float | None = None  # 元動画の長さ（秒）。不明なら None
 
 
 def _output_path(input_path: str, ext: str, output_dir: str | None) -> str:
@@ -65,7 +65,10 @@ def extract_audio(
         raise ExtractError(f"未対応の形式です: {fmt}")
 
     check_dependencies()
-    duration = get_duration(input_path)
+    # 注: 音声の取り出しに「長さ」は不要なので、ここでは ffprobe を呼ばない。
+    #     大きな動画でも待たされず、すぐに処理を開始できる。
+    if not os.path.isfile(input_path):
+        raise ExtractError(f"ファイルが見つかりません: {input_path}")
     spec = FORMATS[fmt]
     output = _output_path(input_path, spec["ext"], output_dir)
     ffmpeg = resolve_tool("ffmpeg") or "ffmpeg"
@@ -83,13 +86,11 @@ def extract_audio(
             )
         raise ExtractError(f"音声の取り出しに失敗しました:\n{stderr}")
 
-    return ExtractResult(output=output, duration=duration, fmt=fmt)
+    return ExtractResult(output=output, fmt=fmt)
 
 
 if __name__ == "__main__":
     import argparse
-
-    from splitter import format_timestamp
 
     parser = argparse.ArgumentParser(description="動画から音声を取り出します。")
     parser.add_argument("input", help="入力動画ファイル")
@@ -105,6 +106,5 @@ if __name__ == "__main__":
     except SplitterError as e:
         raise SystemExit(f"エラー: {e}")
 
-    print(f"元の長さ : {format_timestamp(res.duration)}")
     print(f"形式     : {res.fmt}")
     print(f"出力     : {res.output}")

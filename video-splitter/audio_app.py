@@ -101,27 +101,30 @@ class AudioExtractorApp:
             return
         self.input_path = path
         self.input_var.set(os.path.basename(path))
-        self.info_var.set("動画情報を読み込み中...")
-        self.run_btn.state(["disabled"])
-        threading.Thread(target=self._load_info, daemon=True).start()
-
-    def _load_info(self) -> None:
-        try:
-            duration = get_duration(self.input_path)
-        except SplitterError as e:
-            self.root.after(0, lambda: self._on_info_error(str(e)))
-            return
-        self.root.after(0, lambda: self._on_info_loaded(duration))
-
-    def _on_info_loaded(self, duration: float) -> None:
-        self.info_var.set(f"長さ: {format_timestamp(duration)}")
-        self.status_var.set("準備完了。形式を選んでボタンを押してください。")
+        # 取り出しに長さは不要なので、すぐにボタンを有効化する。
+        # 長さの表示は「おまけ」としてバックグラウンドで読み込む。
         self.run_btn.state(["!disabled"])
+        self.status_var.set("準備完了。形式を選んでボタンを押してください。")
+        self.info_var.set("長さ: 確認中...")
+        # 古い読み込みの結果を無視するためのトークン
+        self._info_token = getattr(self, "_info_token", 0) + 1
+        token = self._info_token
+        threading.Thread(
+            target=self._load_info, args=(path, token), daemon=True
+        ).start()
 
-    def _on_info_error(self, message: str) -> None:
-        self.info_var.set("")
-        messagebox.showerror("エラー", message)
-        self.status_var.set("別のファイルを選択してください。")
+    def _load_info(self, path: str, token: int) -> None:
+        try:
+            duration = get_duration(path)
+            text = f"長さ: {format_timestamp(duration)}"
+        except SplitterError:
+            text = "長さ: 不明"
+        # 表示中のファイルが変わっていなければラベルだけ更新（ボタンは触らない）
+        self.root.after(0, lambda: self._update_info(text, token))
+
+    def _update_info(self, text: str, token: int) -> None:
+        if token == getattr(self, "_info_token", 0):
+            self.info_var.set(text)
 
     def choose_output(self) -> None:
         path = filedialog.askdirectory(title="出力先フォルダを選択")
