@@ -64,6 +64,18 @@ def main() -> int:
     print(f"\n--- 検出: {len(lines)} 発話 / "
           f"{len({ln.speaker for ln in lines})} 話者 ---")
 
+    # 話者ごとのサマリ（話者→出席者名のマッピングや「説明者」判定の手がかり）
+    stats: dict[str, dict] = {}
+    for ln in lines:
+        s = stats.setdefault(ln.speaker, {"count": 0, "dur": 0.0, "gender": ln.gender})
+        s["count"] += 1
+        s["dur"] += max(0.0, ln.end - ln.start)
+    total = sum(s["dur"] for s in stats.values()) or 1.0
+    print("\n--- 話者サマリ（発話量の多い順） ---")
+    for spk, s in sorted(stats.items(), key=lambda kv: -kv[1]["dur"]):
+        print(f"  {spk}（{s['gender']}）: {s['count']}発話 / "
+              f"約{s['dur']:.0f}秒 / 発話比率 {s['dur'] / total:.0%}")
+
     if args.out:
         with open(args.out, "w", encoding="utf-8") as f:
             f.write(text + "\n")
