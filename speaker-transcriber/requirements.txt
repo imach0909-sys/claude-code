@@ -1,0 +1,16 @@
+# Web GUI
+streamlit>=1.33
+
+# 文字起こし（ローカル / 無料）
+faster-whisper>=1.0.0
+
+# 話者分離（ローカル / 無料。初回のみ HuggingFace の無料トークンが必要）
+pyannote.audio>=3.1
+
+# 音声解析（声の高さ F0 から性別推定）
+librosa>=0.10
+soundfile>=0.12
+numpy>=1.24
+
+# pyannote / faster-whisper が依存。GPU があれば自動で使用
+torch>=2.0
