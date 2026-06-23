@@ -37,6 +37,26 @@ streamlit run app.py
 
 ブラウザが開いたら、会議音声をドラッグ＆ドロップして「文字起こしを実行」を押します。
 
+## 精度をすぐ確認したいとき（CLI）
+
+GUI を立てずに 1 コマンドで実行できます。
+
+```bash
+# 文字起こし＋話者ラベリング
+python run.py 会議.mp3 --model medium --speakers 3
+
+# 正解テキストがあれば文字誤り率(CER)も測定
+python run.py 会議.mp3 --reference 正解.txt
+```
+
+モデルを使わないロジック層（性別推定・話者割り当て・整形）は、合成音とモック
+データで検証できます。`small` モデルから試し、精度が足りなければ `medium` /
+`large-v3` に上げてください。
+
+```bash
+python tests/test_logic.py   # 14 項目の自動テスト
+```
+
 ## 出力例
 
 ```
