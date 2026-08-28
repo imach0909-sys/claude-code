@@ -18,4 +18,5 @@ Obsidian vault。`メモ/` フォルダに新規ノートを作成すると、�
 
 - `Templates/メモ.md` — メモテンプレート本体（タイトル / 作成日時 / タグ / 本文）
 - `メモ/` — テンプレートが自動適用されるフォルダ
+- `議事録/` — 会議議事録（Notionの議事録系DBと対応。ファイル名は `YYYY-MM-DD_会議名_議題.md`）
 - `.obsidian/plugins/templater-obsidian/data.json` — Templater のフォルダ単位自動適用設定
