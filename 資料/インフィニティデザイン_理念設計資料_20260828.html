@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>かたちは想いに従う ── インフィニティデザイン 理念設計資料</title>
+<meta name="description" content="ECCO（エコー）の企業理念・戦略・強みの調査と、インフィニティデザインの理念づくりのたたき台。">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F0F1EE; --surface:#FAFAF9; --surface-2:#E7E9E3;
+  --ink:#1B1E1B; --ink-2:#525950; --ink-3:#7C8479;
+  --rule:#D3D7CC; --accent:#8A5230; --accent-ink:#6E3F23;
+  --teal:#2F5B57; --warn:#8C5A12;
+  --shadow:0 1px 2px rgba(27,30,27,.05),0 8px 24px -16px rgba(27,30,27,.28);
+  --serif:"Zen Old Mincho","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --sans:"Noto Sans JP","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131512; --surface:#1C1F1B; --surface-2:#242822;
+    --ink:#E9EBE5; --ink-2:#A6ADA0; --ink-3:#7C8479;
+    --rule:#2F342C; --accent:#C9905F; --accent-ink:#DDAE83;
+    --teal:#7FADA7; --warn:#D0A055;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131512; --surface:#1C1F1B; --surface-2:#242822;
+  --ink:#E9EBE5; --ink-2:#A6ADA0; --ink-3:#7C8479;
+  --rule:#2F342C; --accent:#C9905F; --accent-ink:#DDAE83;
+  --teal:#7FADA7; --warn:#D0A055;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px 96px}
+
+.mast{border-bottom:1px solid var(--rule);padding:64px 0 40px;margin-bottom:48px}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:0 0 24px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(2.4rem,7vw,4.2rem);line-height:1.14;margin:0 0 8px;text-wrap:balance}
+.h1-sub{font-family:var(--mono);font-size:clamp(.82rem,2vw,1rem);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 32px}
+.standfirst{font-size:1.05rem;color:var(--ink-2);margin:0 0 28px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:var(--mono);font-size:.76rem;color:var(--ink-3);letter-spacing:.04em}
+
+.toreader{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--teal);border-radius:3px;padding:22px 26px;margin:0 0 56px}
+.toreader .tag{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.toreader p{margin:0 0 12px}
+.toreader p:last-child{margin-bottom:0}
+
+section{margin:0 0 64px}
+.part{display:flex;align-items:baseline;gap:16px;margin:88px 0 32px;padding-top:24px;border-top:2px solid var(--ink);break-after:avoid}
+.part-no{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;color:var(--accent);white-space:nowrap;padding-top:.5em}
+.part h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.3;margin:0;text-wrap:balance}
+h3{font-family:var(--serif);font-weight:700;font-size:1.28rem;line-height:1.45;margin:0;text-wrap:balance}
+.h3-row{display:flex;gap:14px;align-items:baseline;margin:52px 0 18px;break-after:avoid}
+.h3-no{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);letter-spacing:.1em;white-space:nowrap}
+h4{font-family:var(--sans);font-weight:700;font-size:1rem;margin:30px 0 8px;break-after:avoid}
+p{margin:0 0 16px}
+ul,ol{margin:0 0 16px;padding-left:1.35em}
+li{margin-bottom:8px}
+em{font-style:normal;color:var(--accent-ink);font-weight:500}
+a{color:var(--accent-ink);text-underline-offset:3px}
+
+.tablewrap{overflow-x:auto;margin:0 0 24px;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td,tr:last-child th{border-bottom:none}
+th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;width:1%;border-right:1px solid var(--rule);background:var(--surface-2)}
+td{font-variant-numeric:tabular-nums}
+
+.thesis{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:3px;padding:30px 32px;margin:30px 0 38px;box-shadow:var(--shadow);break-inside:avoid}
+.thesis .line{font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,3.4vw,1.85rem);line-height:1.5;margin:0 0 10px;text-wrap:balance}
+.thesis .en{font-family:var(--mono);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
+.thesis p:last-child{margin-bottom:0}
+
+.note{background:var(--surface-2);border-radius:3px;padding:18px 22px;margin:24px 0;font-size:.93rem;color:var(--ink-2);break-inside:avoid}
+.note .tag{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--warn);margin-bottom:6px}
+.note p:last-child{margin-bottom:0}
+
+.pillars{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:26px 0 34px}
+@media(min-width:760px){.pillars{grid-template-columns:repeat(3,1fr)}}
+.pillar{background:var(--surface);padding:24px}
+.pillar .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:10px}
+.pillar h4{margin:0 0 8px;font-size:1.05rem}
+.pillar p{font-size:.92rem;color:var(--ink-2);margin:0}
+
+.cmp{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:26px 0 34px}
+@media(min-width:760px){.cmp{grid-template-columns:1fr 1fr}}
+.cmp > div{background:var(--surface);padding:24px 26px}
+.cmp .who{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;display:block}
+.cmp .ecco .who{color:var(--teal)}
+.cmp .ours .who{color:var(--accent)}
+.cmp ul{margin:0;padding-left:1.2em;font-size:.93rem}
+
+.draft{border:1px solid var(--rule);border-radius:3px;background:var(--surface);margin:0 0 20px;break-inside:avoid}
+.draft .head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:13px 22px;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.draft .head .t{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.draft .head .jp{font-weight:700;font-size:.9rem}
+.draft .body{padding:22px}
+.draft .body p:last-child{margin-bottom:0}
+.draft .val{font-family:var(--serif);font-size:1.14rem;font-weight:700;line-height:1.6;margin:0 0 10px}
+
+.q{border-top:1px solid var(--rule);padding:20px 0;break-inside:avoid}
+.q:last-of-type{border-bottom:1px solid var(--rule)}
+.q .num{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.12em}
+.q h4{margin:4px 0 8px}
+.q p{margin:0;color:var(--ink-2);font-size:.95rem}
+
+.src{font-size:.86rem;color:var(--ink-2)}
+.src li{margin-bottom:6px}
+hr.rule{border:none;border-top:1px solid var(--rule);margin:48px 0}
+
+footer.colophon{border-top:1px solid var(--rule);margin-top:64px;padding-top:24px;font-family:var(--mono);font-size:.72rem;color:var(--ink-3);letter-spacing:.04em;line-height:2}
+
+@media print{
+  :root{--ground:#fff;--surface:#fff;--surface-2:#f4f4f2;--ink:#000;--ink-2:#333;--ink-3:#666;--rule:#bbb;--shadow:none}
+  body{font-size:10.5pt;line-height:1.7}
+  .wrap{max-width:none;padding:0}
+  .mast{padding-top:0}
+  .part{break-before:page;margin-top:0}
+  .part:first-of-type{break-before:avoid}
+  .thesis,.note,.draft,.q,.pillar,.cmp,.tablewrap{break-inside:avoid}
+  .src a::after{content:" — " attr(href);font-family:var(--mono);font-size:.85em;color:#666;word-break:break-all}
+  a{color:#000;text-decoration:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">ESUTECH ／ インフィニティデザイン 理念設計のための調査</p>
+    <h1>かたちは想いに従う</h1>
+    <p class="h1-sub">Form Follows Feeling</p>
+    <p class="standfirst">
+      ECCO（エコー）が60年以上ぶれずに使い続けてきた <em>form follows foot</em> は、
+      デザイン規範であり、製造規範であり、同時にブランド約束でもある一文です。
+      本資料は、その構造を分解したうえで、社長会議（2026年8月26日）で示された
+      「感謝の気持ちを形にする」を、同じ強度の理念に組み上げるための土台としてまとめたものです。
+    </p>
+    <div class="meta">
+      <span>調査日：2026-08-28</span>
+      <span>対象：ECCO Sko A/S（デンマーク）</span>
+      <span>出典：社長会議 2026-08-26</span>
+    </div>
+  </header>
+
+  <div class="toreader">
+    <span class="tag">勝又さんへ</span>
+    <p>社長から指示のあった「20年持つインフィニティデザインのコンセプト資料」の材料としてお使いください。ベンチマークとして社長が挙げられた ECCO を調べたところ、あの会社の強さは <strong>理念が投資判断の制約として機能している</strong> 点にありました。その構造をそのまま移植する形で、PART 3 に理念のたたき台を置いています。</p>
+    <p>PART 3 は <strong>確定案ではなく叩き台</strong> です。特に末尾の「潰すべき論点」4点は、資料を書き始める前に社長と方向性を決めておいた方が、手戻りが少ないと思われる箇所です。</p>
+  </div>
+
+  <!-- ============ PART 1 ============ -->
+  <div class="part">
+    <span class="part-no">PART 1</span>
+    <h2>ECCO 企業インテリジェンス</h2>
+  </div>
+
+  <section>
+    <div class="h3-row"><span class="h3-no">01</span><h3>会社概要</h3></div>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><th>企業名</th><td>ECCO Sko A/S（エコー）</td></tr>
+          <tr><th>所在地</th><td>デンマーク・ブレデブロ（Bredebro, Denmark）— 創業地に本社を維持</td></tr>
+          <tr><th>創業</th><td>1963年／創業者 カール・トースビュー（Karl Toosbuy）</td></tr>
+          <tr><th>資本形態</th><td>非上場・創業家（Toosbuy家）による同族所有。娘の Hanni Toosbuy Kasprzak がオーナー</td></tr>
+          <tr><th>業務内容</th><td>靴・革製品・小物の企画／製造／小売。加えて自社タンナリー事業（ECCO Leather）で外部ブランドにも革を供給</td></tr>
+          <tr><th>従業員数</th><td>グループ全体で 23,000名超。うち ECCO Sko A/S 単体は 5,255名（2025年12月時点）</td></tr>
+          <tr><th>ベトナム拠点</th><td>ECCO (Vietnam) Co., Ltd — ビンズン省バウバン工業団地。2015年設立・2016年5月アッパー生産開始。約1,700名（2024年）</td></tr>
+          <tr><th>ホームページ</th><td>global.ecco.com</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>創業から60年以上、本社を人口数千人の地方都市ブレデブロに置き続けている点が象徴的です。上場せず同族所有を貫くことで、四半期業績に縛られない長期の意思決定が可能になっており、これが後述する垂直統合戦略を支えています。</p>
+
+    <div class="h3-row"><span class="h3-no">02</span><h3>事業内容</h3></div>
+    <p><strong>主力は「快適さを機能で実現する靴」</strong>です。カジュアル、ビジネス、アウトドア、ゴルフの各カテゴリを持ち、特にゴルフシューズは世界的な評価を得ています。</p>
+    <p>事業の中核はもう一つあります。<strong>ECCO Leather</strong> という革のタンナリー事業で、世界第3位の規模を持ち、自社靴向けに加えて他の高級ブランドにも革を供給しています。「靴メーカーが革も作る」のではなく「革メーカーが靴も作る」に近い構造です。</p>
+
+    <div class="h3-row"><span class="h3-no">03</span><h3>市場ポジション・強み・技術</h3></div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="k">Vertical Integration</span>
+        <h4>垂直統合</h4>
+        <p>木型・金型・なめし・製靴・小売まで自社で保有。オランダ、タイ、インドネシア、中国にタンナリーを持ち、生産地の近くに素材供給を置くことで工程間の輸送を排除。</p>
+      </div>
+      <div class="pillar">
+        <span class="k">Process Technology</span>
+        <h4>DIP（直接射出成形）</h4>
+        <p>溶融ポリウレタンをアッパーに直接射出し、化学結合でソールを接合。接着剤を使わず強度と信頼性を確保。生産の約8割に適用。</p>
+      </div>
+      <div class="pillar">
+        <span class="k">Material Science</span>
+        <h4>DriTan™</h4>
+        <p>皮に元々含まれる水分だけでなめす技術。1枚あたり20リットル、年間2,500万リットル超の水を削減。</p>
+      </div>
+    </div>
+    <p><strong>受賞歴：</strong>DriTan™ は Outdoor Retailer Innovation Award、Popular Science「Best of What's New」2019、Scandinavian Outdoor Award 技術賞（2019）を受賞しています。</p>
+    <p><strong>直近業績（注意して読む必要あり）：</strong>2024年は純収益が前年比5%減、純損失 €37.6百万を計上し、株主が €48百万を資本注入してバランスシートを補強しました。2020年時点の売上は約 €10.9億です。</p>
+    <div class="note">
+      <span class="tag">確度について</span>
+      <p>2024年の売上高そのものの正確な数値は、公開情報（Statista等）が有料のため未確認です。損失額・減収率・資本注入額は業界誌の報道で確認できています。従業員数はグループ全体（23,000名超）と法人単体（5,255名）で桁が異なるため、引用時は必ず区別してください。</p>
+    </div>
+
+    <div class="h3-row"><span class="h3-no">04</span><h3>企業理念・重視していること</h3></div>
+    <div class="thesis">
+      <p class="line">靴が足に合わせるのであって、足が靴に合わせるのではない。</p>
+      <p class="en">Form Follows Foot</p>
+      <p>カール・トースビューは、何世紀も続いた「足を靴に合わせる」製靴の常識を破り、<strong>足の形に靴を合わせる</strong>という発想に転換しました。ECCOのデザインディレクターはこれを「すべての出発点となるECCOのマントラ」と表現しています。</p>
+    </div>
+    <p>ECCOが公に掲げる価値は <strong>クラフトマンシップ（職人技）</strong> と <strong>イノベーション</strong> の二つで、「設計し創り出すすべての中心にある」とされます。加えて同族所有ゆえの <strong>伝統の継承と絶え間ない改善</strong> が語られます。</p>
+    <p>重要なのは、この理念が<em>飾りではなく制約として機能している</em>点です。「足に従う」と決めたから、木型を自社で持つ必要が生じ、革の質を自分で管理する必要が生じ、接着ではなく射出成形を選ぶ必然性が生まれた。理念が投資判断を規定しています。</p>
+
+    <div class="h3-row"><span class="h3-no">05</span><h3>企業文化・職場環境・キャリアラダー</h3></div>
+    <p>同族経営らしく、創業者の精神（Toosbuy spirit）を人事・組織の軸に据える文化が語られます。生産現場を外注せず自社で抱えるため、<strong>技能そのものが会社の資産</strong>という前提があり、なめし・射出成形・木型といった専門技能の内製育成が組織構造に組み込まれています。</p>
+    <p>キャリアラダーとしては、生産技術（タンナリー／DIP／ラスト設計）、デザイン、リテールの3系統が想定されます。ベトナム拠点はアッパー縫製が中心のため、縫製ライン管理から生産技術・品質保証へ上がる経路が現実的です。</p>
+    <div class="note">
+      <span class="tag">確度について</span>
+      <p>05のキャリアラダーは、ECCOが公表している制度そのものではなく、垂直統合という事業構造から導いた推定です。面談等で使う際は「構造上こうなるはず」という前提であることを明示してください。</p>
+    </div>
+
+    <div class="h3-row"><span class="h3-no">06</span><h3>最近のニュース（直近1〜2年）</h3></div>
+    <ul>
+      <li><strong>2024年決算の悪化</strong>：純収益5%減、純損失 €37.6百万。株主による €48百万の資本注入。</li>
+      <li><strong>3Dプリンティングの製造応用</strong>：Stratasys との協業で、DIP用の金型製作に3Dプリントを導入する取り組みが公表されています。</li>
+      <li><strong>ベトナム拠点の拡大</strong>：ECCO Vietnam は 2016年の1,000名規模から 2024年に約1,700名へ。</li>
+    </ul>
+
+    <div class="h3-row"><span class="h3-no">07</span><h3>会話で使えそうな話題</h3></div>
+    <ul>
+      <li>「創業1963年」は社長の生まれ年と同じ — 議事録でも触れられた話題で、掴みとして使えます。</li>
+      <li>「世界3位のタンナリーが、たまたま靴も作っている」という言い方は、垂直統合の本質を一言で伝えられます。</li>
+      <li>DriTan™ の「水を足さない。皮の中の水で、なめす」は、制約を技術で解いた好例として説明しやすい。</li>
+      <li>ブレデブロという小さな町に本社を置き続けている事実は、地方拠点でも世界ブランドになれる証拠として使えます。</li>
+    </ul>
+
+    <div class="h3-row"><span class="h3-no">08</span><h3>ESUHAIとの接点・提案ポイント</h3></div>
+    <p><strong>最大の接点はビンズン省です。</strong>ECCO (Vietnam) はビンズン省バウバン工業団地にあり、約1,700名を雇用しています。ESUWORKS は同じビンズンに拠点（KAIZEN吉田スクール ビンズン分校内）を持ち、ミーが常駐しています。地理的にも人材ニーズ的にも、すでに射程内です。</p>
+    <p><strong>提案の切り口は3つ考えられます。</strong></p>
+    <ul>
+      <li><strong>人材紹介：</strong>縫製ライン管理・生産技術・品質保証はESUTECHが強い領域。日本企業向けに育てた技術者層と職種が重なります。</li>
+      <li><strong>R&amp;Dのベンチマーク：</strong>DIP・DriTan™ という「素材から工程まで自社で握る」思想は、ESUTECHが目指す7つの実力（特に調達購買・生産管理・品質管理）の実例そのものです。</li>
+      <li><strong>ブランド論の教材：</strong>理念を投資判断の制約として使う手法は、インフィニティデザインにそのまま応用できます（PART 2以降）。</li>
+    </ul>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <div class="part">
+    <span class="part-no">PART 2</span>
+    <h2>プレミアムブランドの理念は、どう組み立てられているか</h2>
+  </div>
+
+  <section>
+    <p>プレミアムブランドの理念は「良いことを並べたリスト」ではありません。強いブランドの理念には、共通して次の3つの性質があります。ECCOを含む具体例で確認します。</p>
+
+    <h4>性質1 ─ 一文で、全部門を拘束する</h4>
+    <p><em>form follows foot</em> は標語ではなく判断基準です。デザイナーは「格好いいか」ではなく「足に従っているか」で判断し、購買は革の質を自社管理する結論に至り、生産技術は接着ではなくDIPを選ぶ。<strong>理念が投資と工程を決める</strong>ところまで下りているかが、飾りとの分かれ目です。</p>
+
+    <h4>性質2 ─ 何をやらないかを決めている</h4>
+    <p>理念は「やること」より「やらないこと」を規定したときに機能します。ECCOは足に従わないデザインを捨て、なめしを外注しない代わりに世界3位の設備投資を負っています。<strong>捨てるものが書かれていない理念は、何も拘束していません。</strong></p>
+
+    <h4>性質3 ─ 創業者の個人的な原体験に根がある</h4>
+    <p>トースビューの「なぜ人は足を靴に合わせているのか」という素朴な疑問が起点です。理論から作られた理念は模倣できますが、原体験から出た理念は模倣できません。ブランド理論（Kapferer のブランド・アイデンティティ・プリズムなど）でも、模倣困難性の源泉は <em>Culture</em>（歴史・創業者・価値観）に置かれています。</p>
+
+    <div class="note">
+      <span class="tag">読み落とされやすい前提</span>
+      <p>ECCOは2024年に純損失を計上しています。<strong>強い理念は必要条件であって十分条件ではありません。</strong>理念と、勝又さんが挙げた「7つの実力」（商品開発力・調達購買・生産管理・品質管理・ロジスティクス・販売計画・顧客管理）は、どちらが欠けても事業になりません。理念づくりが実力構築を後回しにする口実にならないよう、両輪で進める必要があります。</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <div class="part">
+    <span class="part-no">PART 3</span>
+    <h2>インフィニティデザインの理念 ── たたき台</h2>
+  </div>
+
+  <section>
+    <p>議事録で社長が語った要素を、PART 2の3性質に照らして組み直したものです。<strong>確定案ではなく、社長・勝又さんと潰し込むための出発点</strong>として作っています。</p>
+
+    <div class="thesis">
+      <p class="line">かたちは、想いに従う。</p>
+      <p class="en">Form Follows Feeling</p>
+      <p>ECCOが「足」に従うと決めたように、インフィニティデザインは<strong>「贈る人の想い」に従う</strong>と決める。市場が求めるものでも、作りやすいものでも、売れ筋でもなく、目の前の一人の感謝の気持ちが形を決める ── という宣言です。</p>
+    </div>
+
+    <p><strong>この一文が、なぜ拘束として機能するか。</strong>「想いに従う」と決めた瞬間、在庫を持つ判断ができなくなります（想いは注文の後にしか存在しないため）。量産前提の設計もできなくなります。逆に、個人が持つアイデアや特許を商品化する必然性が生まれます。社長が議事録で挙げた方針が、すべてこの一文から導出できます。</p>
+
+    <h4>やらないと決めること</h4>
+    <div class="cmp">
+      <div class="ecco">
+        <span class="who">ECCO の場合</span>
+        <ul>
+          <li>足の形に従わないデザインは採用しない</li>
+          <li>なめしを外注しない（自社で世界3位の設備を持つ）</li>
+          <li>接着で済ませない（DIPに投資する）</li>
+        </ul>
+      </div>
+      <div class="ours">
+        <span class="who">インフィニティデザイン（案）</span>
+        <ul>
+          <li>在庫を持たない（受注生産・予約生産に限る）</li>
+          <li>安く作らない（価格で競争しない）</li>
+          <li>贈り主の物語が無い商品は出さない</li>
+          <li>第1号の顧客との関係を終わらせない</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>理念フレームの草案</h4>
+
+    <div class="draft">
+      <div class="head"><span class="t">Purpose ／ 存在意義</span><span class="jp">なぜ存在するのか</span></div>
+      <div class="body">
+        <p class="val">世の中にまだ無い「ありがとう」を、この世に一つだけの形にする。</p>
+        <p>市販品では表せない感謝がある。それを形にできる場所を、世界のどこかに一つ作る。</p>
+      </div>
+    </div>
+
+    <div class="draft">
+      <div class="head"><span class="t">Vision ／ 20年後の姿</span><span class="jp">どこへ向かうのか</span></div>
+      <div class="body">
+        <p class="val">「特別な一日の贈り物なら、まずここを見る」と世界中で言われている状態。</p>
+        <p>規模としては20年で100億円。ただし数量ではなく、<strong>一つあたりの意味の深さ</strong>で積み上げた100億円であること。</p>
+      </div>
+    </div>
+
+    <div class="draft">
+      <div class="head"><span class="t">Mission ／ 果たす役割</span><span class="jp">何をするのか</span></div>
+      <div class="body">
+        <p class="val">形にできずに眠っているアイデアと、伝えられずにいる想いを、引き合わせる。</p>
+        <p>個人が持つ特許・アイデアを、ワンチーム（企画から製造・納品まで）で製品化する。贈りたい人の要望を受け、開発してから届ける。</p>
+      </div>
+    </div>
+
+    <div class="draft">
+      <div class="head"><span class="t">Values ／ 行動指針</span><span class="jp">どう振る舞うのか</span></div>
+      <div class="body">
+        <p><strong>一人から始める。</strong>市場調査からではなく、目の前の一人の想いから設計を始める。</p>
+        <p><strong>作る前に、約束する。</strong>在庫ではなく約束を先に持つ。届けられない約束はしない。</p>
+        <p><strong>第1号を、永遠に讃える。</strong>最初の一人がいなければ、その商品は存在しなかった。量産化した後も還元し続ける。</p>
+        <p><strong>哲学を、AIに渡さない。</strong>手は借りる。判断は渡さない。</p>
+      </div>
+    </div>
+
+    <div class="draft">
+      <div class="head"><span class="t">Brand Promise ／ 顧客への約束</span><span class="jp">何を保証するのか</span></div>
+      <div class="body">
+        <p class="val">あなたの一つは、世界で最初の一つとして記録され、私たちが存在する限り記録され続けます。</p>
+        <p>「世界第1号」の資格プレート、および量産化した場合の長期還元（社長案）を、約束として明文化したものです。<em>Infinity＝関係が終わらないこと</em>を、感情表現ではなく制度で担保します。</p>
+      </div>
+    </div>
+
+    <h4>ECCOには無く、インフィニティデザインにしか無いもの</h4>
+    <p>ベンチマークをそのまま真似ると二番煎じになります。差分を明確にしておきます。ECCOの関係は<strong>購入した時点で完結</strong>します。インフィニティデザインは、第1号プレートと長期還元によって<strong>購入した時点から関係が始まる</strong>設計です。ここが「インフィニティ」の実体であり、模倣困難性の源泉になり得ます。社長が「20年後に販売数の一定パーセンテージを還元する」と述べた仕組みは、理念の飾りではなく、この差分を成立させる中核装置として扱うべきです。</p>
+
+    <h4>次回の社長会議で潰すべき論点</h4>
+
+    <div class="q">
+      <span class="num">Q1</span>
+      <h4>「想い」の主語は、贈る人か、アイデアを持つ人か</h4>
+      <p>感謝を贈りたい人と、特許・アイデアを形にしたい人は別人です。両方を一つの理念で束ねるのか、主を決めて従を副次に置くのかで、サイト設計もアプリ設計も変わります。</p>
+    </div>
+    <div class="q">
+      <span class="num">Q2</span>
+      <h4>長期還元は、どこまで法的・会計的に約束できるか</h4>
+      <p>20年間の顧客データ保持と支払い義務は、実務として設計が必要です。理念に書くなら、履行できる範囲で書く必要があります。</p>
+    </div>
+    <div class="q">
+      <span class="num">Q3</span>
+      <h4>「健康」は理念に入るのか、商品領域の話か</h4>
+      <p>社長は「これからのキーワードは健康」と述べていますが、感謝を形にすることと健康は直接つながりません。杖という第1号商品に由来する領域設定なのか、理念そのものなのかを切り分ける必要があります。</p>
+    </div>
+    <div class="q">
+      <span class="num">Q4</span>
+      <h4>マクアケでの先行販売は、この理念と矛盾しないか</h4>
+      <p>クラウドファンディングは「予約生産」という点で理念と整合しますが、不特定多数への訴求という点では「一人から始める」と緊張します。位置づけの説明を用意しておくと、社内にも説明しやすくなります。</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h3>出典</h3>
+    <ul class="src">
+      <li><a href="https://en.wikipedia.org/wiki/ECCO">ECCO — Wikipedia</a>（創業・沿革・規模）</li>
+      <li><a href="https://us.ecco.com/stories/about-us">About ECCO® and our Shoes</a>（クラフトマンシップとイノベーション）</li>
+      <li><a href="https://manofmany.com/style/sneakers/ecco-form-follows-foot">From Denmark With Love: How 'Form Follows Foot' Became a World-Conquering Ethos — Man of Many</a></li>
+      <li><a href="https://scandasia.com/8540-ecco-and-the-vertical-integration/">Ecco and the Vertical Integration — ScandAsia</a></li>
+      <li><a href="https://vdbshoes.com/blogs/news/where-ecco-shoes-are-made">Following the Journey of Where ECCO Shoes Are Made</a>（ベトナム工場・タンナリー網）</li>
+      <li><a href="https://eurochamvn.org/user/ecco+vietnam+co.+ltd6401/">ECCO (VIETNAM) CO., LTD — EuroCham Vietnam</a></li>
+      <li><a href="https://sgbonline.com/pressrelease/ecco-wins-outdoor-retailer-innovation-award-for-dritan-leather-technology/">ECCO Wins Outdoor Retailer Innovation Award For DriTan — SGB Media</a></li>
+      <li><a href="https://sustonmagazine.com/ecco-water-efficient-innovation/">A Water-Efficient Innovation — Suston Magazine</a>（DriTan™ の節水量）</li>
+      <li><a href="https://www.shoeintelligence.com/financial-results/ecco-had-to-shore-up-its-balance-sheet-in-2024-due-to-unsatisfactory-results/113920.article">Ecco had to shore up its balance sheet in 2024 — Shoe Intelligence</a></li>
+      <li><a href="https://www.oicompass.com/financial-results/ecco-reports-2024-loss-injects-48m-to-bolster-balance-sheet/113934.article">Ecco reports 2024 loss, injects €48m — Outdoor Industry Compass</a></li>
+      <li><a href="https://www.stratasys.com/en/resources/case-studies/ecco-origin-one-3d-printing-dip-footwear/">Transforming Footwear Manufacturing — Stratasys</a>（DIPと3Dプリント）</li>
+      <li><a href="https://fourweekmba.com/kapferer-brand-identity-prism-in-a-nutshell/">Kapferer Brand Identity Prism</a>（ブランド理論の枠組み）</li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <div>インフィニティデザイン 理念設計資料 ／ 2026-08-28</div>
+    <div>PART 1 は社内様式「企業インテリジェンス調査」に準拠。PART 3 は社長会議（2026-08-26）の発言を出典とした草案であり、ESUTECH の確定見解ではありません。</div>
+    <div>社内限り ── 外部配布不可</div>
+  </footer>
+
+</div>
+</body>
+</html>
